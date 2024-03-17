@@ -6,7 +6,7 @@ Use this extension to generate rust-rbatis code from database ddl, currently onl
 
 ### create rbatis data struct from explorer.
 
-![image](images/generate_code_by_explorer.gif)
+![image](images/generate_code_by_context_menu.gif)
 
 
 ### create rbatis data struct from command.
