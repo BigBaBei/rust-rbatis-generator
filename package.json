@@ -18,6 +18,16 @@
         "title": "generate struct"
       }
     ],
+    "configuration": {
+      "title": "rust-rbatis-generator",
+      "properties": {
+        "rust-rbatis-generator.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "enable/disable this extension"
+        }
+      }
+    },
     "menus": {
       "explorer/context": [
         {

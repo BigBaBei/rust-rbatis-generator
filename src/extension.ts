@@ -11,9 +11,9 @@ import { Parser } from 'sql-ddl-to-json-schema';
 export function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "rust-rbatis-generator" is now active!'
-  );
+  // console.log(
+  //   'Congratulations, your extension "rust-rbatis-generator" is now active!'
+  // );
 
   let disposable = vscode.commands.registerCommand(
     "rust-rbatis-generator.generate",
@@ -33,8 +33,6 @@ export function activate(context: vscode.ExtensionContext) {
       : path.dirname(uri.fsPath);
       const rootUri = vscode.Uri.file(rootPath);
 
-      console.log("rootUri", rootUri);
-
       showCreateTableDDLBox(rootUri);
     }
   );
@@ -51,8 +49,14 @@ async function fileExists(uri: vscode.Uri): Promise<boolean> {
 }
 
 async function showCreateTableDDLBox(rootUri: vscode.Uri) {
+  const isEnabled = vscode.workspace.getConfiguration().get("rust-rbatis-generator.enable");
+  if (!isEnabled) {
+    vscode.window.showErrorMessage("Please enable rust-rbatis-generator first!");
+    return;
+  }
+
   vscode.window.showInputBox({
-    prompt: "Please input your table DDL",
+    prompt: "Please input your table DDL with semicolon at the end.",
     placeHolder: "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT,`name` varchar(255) DEFAULT NULL,`age` int(11) DEFAULT NULL,`create_time` datetime DEFAULT NULL,`update_time` datetime DEFAULT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
   }).then(async(input) => {
     if (input) {
@@ -60,7 +64,7 @@ async function showCreateTableDDLBox(rootUri: vscode.Uri) {
       const rootPath = (await fs.promises.lstat(rootUri.fsPath)).isDirectory()
                     ? rootUri.fsPath
                     : path.dirname(rootUri.fsPath);
-      console.log(vscode.Uri.joinPath(rootUri, input+".rs"));
+      // console.log(vscode.Uri.joinPath(rootUri, input+".rs"));
       if(await fileExists(vscode.Uri.joinPath(rootUri, input+".rs"))){
         const err = `file ${input}.rs already exists!`;
         vscode.window.showErrorMessage(err);
