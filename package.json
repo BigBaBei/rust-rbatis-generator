@@ -2,7 +2,10 @@
   "name": "rust-rbatis-generator",
   "displayName": "rust-rbatis-generator",
   "description": "simplify rust code generator with rbatis",
+  "repository": "https://github.com/BigBaBei/rust-rbatis-generator.git",
+  "publisher": "pengyi",
   "version": "0.0.1",
+  "icon": "images/logo256.png",
   "engines": {
     "vscode": "^1.87.0"
   },
